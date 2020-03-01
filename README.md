@@ -43,6 +43,11 @@ create table Telefones
   FOREIGN KEY (Fornecedor) REFERENCES Fornecedores(Id)
 )
 ```
+
+***Execute a solução no modo release***
+
+[![INSERT YOUR GRAPHIC HERE]( https://i.imgur.com/UfAruvX.png)]()
+
  
 ***Layout do sistema***
 
