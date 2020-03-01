@@ -26,7 +26,11 @@ namespace ProjetoMVC.Models
 
 
         [Display(Name = "Data de nascimento")]
-        public DateTime DataNascimento { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? DataNascimento { get; set; }
+
+
+        public int Idade { get; set; }
 
     }
 }

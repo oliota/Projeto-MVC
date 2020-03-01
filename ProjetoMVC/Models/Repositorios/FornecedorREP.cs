@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjetoMVC.Ultis;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -71,6 +72,8 @@ namespace ProjetoMVC.Models.Repositorios
                 " a.Nome, " +
                 " a.CpfCnpj, " +
                 " a.DataCadastro, " +
+                " a.RG, " +
+                " a.DataNascimento, " +
                 " b.NomeFantasia as Empresa " +
                 " FROM " + tabela + " a , Empresas b " +
                 " where b.Id=a.Empresa " +
@@ -109,7 +112,10 @@ namespace ProjetoMVC.Models.Repositorios
                 Empresa = reader["Empresa"].ToString(),
                 Nome = reader["Nome"].ToString(),
                 CpfCnpj = reader["CpfCnpj"].ToString(),
-                DataHoraCadastro = DateTime.Parse(reader["DataCadastro"].ToString())
+                DataHoraCadastro = DateTime.Parse(reader["DataCadastro"].ToString()),
+                RG = reader["RG"].ToString(),
+                DataNascimento = Validador.converter(reader["DataNascimento"].ToString()),
+                Idade = Validador.calcularIdade(Validador.converter(reader["DataNascimento"].ToString()))
             };
         }
 
@@ -120,19 +126,21 @@ namespace ProjetoMVC.Models.Repositorios
         public override Fornecedor GetById(int id)
         {
             using (var conn = new SqlConnection(StringConnection))
-            { 
+            {
                 string sql = "Select " +
                     " a.Id, " +
                     " a.Nome, " +
                     " a.CpfCnpj, " +
                     " a.DataCadastro, " +
+                    " a.RG, " +
+                    " a.DataNascimento, " +
                     " b.NomeFantasia as Empresa " +
                     " FROM " + tabela + " a , Empresas b  " +
                     " WHERE a.Id=@Id " +
                     " and a.Empresa=b.Id " +
                     " ORDER BY a.Nome";
                 SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@Id", id); 
+                cmd.Parameters.AddWithValue("@Id", id);
                 try
                 {
                     conn.Open();
@@ -142,7 +150,7 @@ namespace ProjetoMVC.Models.Repositorios
                         {
                             if (reader.Read())
                             {
-                               return PreencherDados(reader);
+                                return PreencherDados(reader);
                             }
                         }
                     }
@@ -168,13 +176,15 @@ namespace ProjetoMVC.Models.Repositorios
                     " a.Nome, " +
                     " a.CpfCnpj, " +
                     " a.DataCadastro, " +
+                    " a.RG, " +
+                    " a.DataNascimento, " +
                     " b.NomeFantasia as Empresa  " +
                     " FROM " + tabela + " a , Empresas b " +
                     " WHERE a.Nome=@Nome " +
                     " and a.Empresa=b.Id " +
                     " ORDER BY a.Nome ";
                 SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@Nome", nome); 
+                cmd.Parameters.AddWithValue("@Nome", nome);
                 try
                 {
                     conn.Open();
@@ -200,11 +210,13 @@ namespace ProjetoMVC.Models.Repositorios
         public override List<Fornecedor> GetByRef(int id)
         {
             using (var conn = new SqlConnection(StringConnection))
-            { 
+            {
                 string sql = "Select a.Id, " +
                     " a.Nome, " +
                     " a.CpfCnpj, " +
                     " a.DataCadastro, " +
+                    " a.RG, " +
+                    " a.DataNascimento, " +
                     " b.NomeFantasia as Empresa " +
                     " FROM " + tabela + " a , Empresas b " +
                     " WHERE a.Empresa=@Empresa " +
@@ -246,8 +258,16 @@ namespace ProjetoMVC.Models.Repositorios
                 EmpresaREP empresaREP = new EmpresaREP();
                 Empresa empresa = empresaREP.GetByName(entity.Empresa);
 
-                string sql = "INSERT INTO " + tabela + "(Empresa,Nome,CpfCnpj,DataCadastro ) values(@Empresa,@Nome,@CpfCnpj,CONVERT(datetime, @DataCadastro, 103))";
-                SqlCommand cmd = new SqlCommand(sql, conn); 
+                string sql = "INSERT INTO " + tabela +
+                    "(Empresa,Nome,CpfCnpj,DataCadastro,RG,DataNascimento ) " +
+                    "values(@Empresa," +
+                    "@Nome," +
+                    "@CpfCnpj," +
+                    "CONVERT(datetime, @DataCadastro, 103)," +
+                    "@RG," +
+                    "CONVERT(datetime, @DataNascimento, 103)" +
+                    ")";
+                SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@DataCadastro", DateTime.Now);
                 cmd.Parameters.AddWithValue("@Empresa", empresa.Id);
                 ComplementarParametros(ref cmd, entity);
@@ -264,7 +284,7 @@ namespace ProjetoMVC.Models.Repositorios
             }
         }
 
-        
+
         ///<summary>Atualiza um fornecedor no banco
         ///<param name="entity">Referência de Fornecedor que será atualizada.</param>
         ///</summary>
@@ -281,7 +301,7 @@ namespace ProjetoMVC.Models.Repositorios
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@Id", entity.Id);
                 ComplementarParametros(ref cmd, entity);
-               
+
                 try
                 {
                     conn.Open();
@@ -301,6 +321,8 @@ namespace ProjetoMVC.Models.Repositorios
         {
             cmd.Parameters.AddWithValue("@Nome", entity.Nome);
             cmd.Parameters.AddWithValue("@CpfCnpj", entity.CpfCnpj);
+            cmd.Parameters.AddWithValue("@RG", entity.RG);
+            cmd.Parameters.AddWithValue("@DataNascimento", entity.DataNascimento);
         }
 
     }

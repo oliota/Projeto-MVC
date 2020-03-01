@@ -49,6 +49,12 @@ namespace ProjetoMVC.Controllers
                     return View();
                 }
 
+                if (string.IsNullOrWhiteSpace(p.DataNascimento.ToString()))
+                {
+                    ModelState.AddModelError("DataNascimento", "Para cadastro de pessoa fisica é necessario informar a Data de nascimento.");
+                    return View();
+                }
+
                 if ( p.DataNascimento.ToString().Equals("01/01/0001 00:00:00"))
                 {
                     ModelState.AddModelError("DataNascimento", "Para cadastro de pessoa fisica é necessario informar a data de nascimento.");
@@ -61,7 +67,7 @@ namespace ProjetoMVC.Controllers
                     ModelState.AddModelError("DataNascimento", "Para empresas do Paraná não é permitido cadastro de fornecedores menores de idade.");
                     return View();
                 }
-            } else if (Validador.ValidaCPF(p.CpfCnpj))
+            } else if (Validador.ValidaCNPJ(p.CpfCnpj))
             {
                 p.Tipo = 1;
             }

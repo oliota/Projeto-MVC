@@ -228,14 +228,26 @@ namespace ProjetoMVC.Ultis
 
         }
 
-        public static int calcularIdade(DateTime dataNascimento)
+        public static int calcularIdade(DateTime? dataNascimento)
         {
+            DateTime copia = (DateTime)dataNascimento;
+            if (copia.ToString().Equals("01/01/0001 00:00:00"))
+                return 0;
+
             var today = DateTime.Today;
             // Calculate the age.
-            var idade = today.Year - dataNascimento.Year;
+            var idade = today.Year - copia.Year;
             // Go back to the year the person was born in case of a leap year
-            if (dataNascimento.Date > today.AddYears(-idade)) idade--;
+            if (copia.Date > today.AddYears(-idade)) idade--;
             return idade;
+        }
+
+        public static DateTime converter(string data)
+        {
+            DateTime dateValue;
+            DateTime.TryParse(data, out dateValue);
+
+            return dateValue;
         }
     }
 }
