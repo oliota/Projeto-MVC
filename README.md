@@ -44,6 +44,10 @@ create table Telefones
 )
 ```
 
+***Recompile a solução no modo debug***
+
+[![INSERT YOUR GRAPHIC HERE](https://i.imgur.com/hjWUYTy.png)]()
+
 ***Execute a solução no modo release***
 
 [![INSERT YOUR GRAPHIC HERE]( https://i.imgur.com/UfAruvX.png)]()
