@@ -1,0 +1,45 @@
+﻿@model ProjetoMVC.Models.Empresa
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+
+<div>
+    <a href='~/Empresa/Index'>Voltar</a>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NomeFantasia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomeFantasia)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UF)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UF)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CNPJ)
+        </dt>
+
+
+        <dd>
+            @Html.DisplayFor(model => model.CNPJ)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Excluir" class="btn btn-default" />
+
+        </div>
+    }
+</div>

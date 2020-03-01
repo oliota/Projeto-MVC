@@ -1,0 +1,56 @@
+﻿@model ProjetoMVC.Models.Fornecedor
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<div>
+    <a href='javascript:history.go(-1)'>Voltar</a>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CpfCnpj)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CpfCnpj)
+        </dd>
+
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataHoraCadastro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataHoraCadastro)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Empresa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Empresa)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Excluir" class="btn btn-default" />
+
+        </div>
+    }
+</div>
