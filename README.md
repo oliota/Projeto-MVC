@@ -52,7 +52,7 @@ create table Telefones
 Substituir o "LAPTOP-URIUHHVG\SQLEXPRESS"
 ```
 <connectionStrings>
-  <add name="BancoEscola" connectionString="Data Source=LAPTOP-URIUHHVG\SQLEXPRESS; Initial Catalog=BDEscola; Integrated Security=True; MultipleActiveResultSets=True;"
+  <add name="BDProjetoMVC" connectionString="Data Source=LAPTOP-URIUHHVG\SQLEXPRESS; Initial Catalog=BDProjetoMVC; Integrated Security=True; MultipleActiveResultSets=True;"
     providerName="System.Data.SqlClient" />
 </connectionStrings>
 ```
