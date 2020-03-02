@@ -44,6 +44,20 @@ create table Telefones
 )
 ```
 
+>No visual studio localize a solution do projeto
+
+>No projeto aberto localize o arquivo WebConfig
+
+>É necessario alterar o connectionString com as definições da maquina
+Substituir o "LAPTOP-URIUHHVG\SQLEXPRESS"
+```
+<connectionStrings>
+  <add name="BancoEscola" connectionString="Data Source=LAPTOP-URIUHHVG\SQLEXPRESS; Initial Catalog=BDEscola; Integrated Security=True; MultipleActiveResultSets=True;"
+    providerName="System.Data.SqlClient" />
+</connectionStrings>
+```
+
+
 ***Recompile a solução no modo debug***
 
 [![INSERT YOUR GRAPHIC HERE](https://i.imgur.com/hjWUYTy.png)]()
