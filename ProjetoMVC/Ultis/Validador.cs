@@ -228,10 +228,10 @@ namespace ProjetoMVC.Ultis
 
         }
 
-        public static int calcularIdade(DateTime? dataNascimento)
+        public static int CalcularIdade(DateTime? dataNascimento)
         {
             DateTime copia = (DateTime)dataNascimento;
-            if (copia.ToString().Equals("01/01/0001 00:00:00"))
+            if (copia.ToString().Equals("01/01/1900 00:00:00"))
                 return 0;
 
             var today = DateTime.Today;

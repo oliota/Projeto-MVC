@@ -1,6 +1,7 @@
 ﻿using ProjetoMVC.Models;
 using ProjetoMVC.Models.Repositorios;
 using ProjetoMVC.Ultis;
+using System;
 using System.Web.Mvc;
 
 namespace ProjetoMVC.Controllers
@@ -55,30 +56,36 @@ namespace ProjetoMVC.Controllers
                     return View();
                 }
 
-                if ( p.DataNascimento.ToString().Equals("01/01/0001 00:00:00"))
+                if (p.DataNascimento.ToString().Equals("01/01/0001 00:00:00"))
                 {
                     ModelState.AddModelError("DataNascimento", "Para cadastro de pessoa fisica é necessario informar a data de nascimento.");
                     return View();
                 }
 
 
-                if (Validador.calcularIdade(p.DataNascimento) < 18 && empresa.UF.ToUpper().Equals("PR") )
+                if (Validador.CalcularIdade(p.DataNascimento) < 18 && empresa.UF.ToUpper().Equals("PR"))
                 {
                     ModelState.AddModelError("DataNascimento", "Para empresas do Paraná não é permitido cadastro de fornecedores menores de idade.");
                     return View();
                 }
-            } else if (Validador.ValidaCNPJ(p.CpfCnpj))
+            }
+            else if (Validador.ValidaCNPJ(p.CpfCnpj))
             {
                 p.Tipo = 1;
+                if (string.IsNullOrWhiteSpace(p.RG))
+                    p.RG = "";
+                if (p.DataNascimento.ToString().Equals("01/01/0001 00:00:00"))
+                    p.DataNascimento = new DateTime(1900, 01, 01);
             }
             else
             {
-                ModelState.AddModelError("CpfCnpj", "Informe um CPF ou CNPJ válido."); 
+                ModelState.AddModelError("CpfCnpj", "Informe um CPF ou CNPJ válido.");
                 return View();
             }
 
             if (ModelState.IsValid)
             {
+
                 repositorio.Save(p);
                 return RedirectToAction("../Empresa/Fornecedores/" + empresaREP.GetByName(p.Empresa).Id);
             }
@@ -87,11 +94,11 @@ namespace ProjetoMVC.Controllers
                 return View(p);
             }
         }
- 
+
 
         // POST: Fornecedor/Editar/5 
         public ActionResult Editar(int id)
-        { 
+        {
             return View(repositorio.GetById(id));
         }
 

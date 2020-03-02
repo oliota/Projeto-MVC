@@ -106,6 +106,7 @@ namespace ProjetoMVC.Models.Repositorios
         ///</summary>
         private Fornecedor PreencherDados(SqlDataReader reader)
         {
+            int idade = Validador.CalcularIdade(Validador.converter(reader["DataNascimento"].ToString()));
             return new Fornecedor()
             {
                 Id = (int)reader["Id"],
@@ -115,7 +116,7 @@ namespace ProjetoMVC.Models.Repositorios
                 DataHoraCadastro = DateTime.Parse(reader["DataCadastro"].ToString()),
                 RG = reader["RG"].ToString(),
                 DataNascimento = Validador.converter(reader["DataNascimento"].ToString()),
-                Idade = Validador.calcularIdade(Validador.converter(reader["DataNascimento"].ToString()))
+                Idade = idade == 0 ? "" : idade.ToString()
             };
         }
 

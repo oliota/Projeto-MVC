@@ -30,7 +30,7 @@ namespace ProjetoMVC.Models
         public DateTime? DataNascimento { get; set; }
 
 
-        public int Idade { get; set; }
+        public string Idade { get; set; }
 
     }
 }
